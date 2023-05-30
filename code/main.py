@@ -13,14 +13,14 @@ import math
 
 def main():
     opts = get_opts()
-    # print(opts)
+    print(opts)
     # # Q1.1
-    # img_path = join(opts.data_dir, 'kitchen/sun_aasmevtpkslccptd.jpg')
-    # # img = Image.open(img_path)
-    # img = Image.open(img_path).convert("RGB")  #Discard the last channel of RGBA to RGB  
-    # img = np.array(img).astype(np.float32) / 255
+    img_path = join(opts.data_dir, 'kitchen/sun_aasmevtpkslccptd.jpg')
+    # img = Image.open(img_path)
+    img = Image.open(img_path).convert("RGB")  #Discard the last channel of RGBA to RGB  
+    img = np.array(img).astype(np.float32) / 255
 
-    # #my idea
+    ##===My idea for squaring every image into the same size(512, 512) for performance improvement===##
     # smaller_side = min(img.shape[0:2])
     # bigger_side = max(img.shape[0:2])
     # side_indx = img.shape.index(smaller_side)
@@ -38,11 +38,9 @@ def main():
 
     # img = resize(img_crop, (512, 512))
 
-    # feature = get_image_feature(img_path, dictionary) #Extracts the spatial pyramid matching feature.
-    # features.append(feature)
-    
-    # filter_responses = visual_words.extract_filter_responses(opts, img)
-    # util.display_filter_responses(opts, filter_responses)
+
+    filter_responses = visual_words.extract_filter_responses(opts, img)
+    util.display_filter_responses(opts, filter_responses)
 
     # # Q1.2
     n_cpu = util.get_num_CPU()
@@ -50,12 +48,12 @@ def main():
 
     # Q1.3
 
-    # img_path = join(opts.data_dir, 'kitchen/sun_aasmevtpkslccptd.jpg')
-    # img = Image.open(img_path)
-    # img = np.array(img).astype(np.float32)/255
-    # dictionary = np.load(join(opts.out_dir, 'dictionary-copy1.npy'))
-    # wordmap = visual_words.get_visual_words(opts, img, dictionary)
-    # util.visualize_wordmap(wordmap)
+    img_path = join(opts.data_dir, 'kitchen/sun_aasmevtpkslccptd.jpg')
+    img = Image.open(img_path)
+    img = np.array(img).astype(np.float32)/255
+    dictionary = np.load(join(opts.out_dir, 'dictionary-copy1.npy'))
+    wordmap = visual_words.get_visual_words(opts, img, dictionary)
+    util.visualize_wordmap(wordmap)
 
     # # Q2.1-2.4
     n_cpu = util.get_num_CPU()
@@ -68,8 +66,8 @@ def main():
     print(conf)
     print(accuracy)
 
-    # np.savetxt(join(opts.out_dir, 'confmat.csv'), conf, fmt='%d', delimiter=',')
-    # np.savetxt(join(opts.out_dir, 'accuracy.txt'), [accuracy], fmt='%g')
+    np.savetxt(join(opts.out_dir, 'confmat.csv'), conf, fmt='%d', delimiter=',')
+    np.savetxt(join(opts.out_dir, 'accuracy.txt'), [accuracy], fmt='%g')
 
 
 if __name__ == '__main__':

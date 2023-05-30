@@ -103,11 +103,8 @@ def get_image_feature(opts, img_path, dictionary):
 
     img = Image.open(img_path).convert("RGB")
     img = np.array(img).astype(np.float32) / 255
-    
-    # smaller_side = min(img.shape[0:2])
-    # bigger_side = max(img.shape[0:2])
-    # side_indx = img.shape.index(smaller_side)
-    
+       
+    ##===My idea for squaring every image into the same size(512, 512) for performance improvement===##
     # smaller_side = min(img.shape[0:2])
     # bigger_side = max(img.shape[0:2])
     # side_indx = img.shape.index(smaller_side)
@@ -167,7 +164,7 @@ def build_recognition_system(opts, n_worker=1):
         # img = Image.open(img_path)
         img = Image.open(img_path).convert("RGB")
         img = np.array(img).astype(np.float32) / 255
-        ##my idea
+        ##===My idea for squaring every image into the same size(512, 512) for performance improvement===##
         # smaller_side = min(img.shape[0:2])
         # bigger_side = max(img.shape[0:2])
         # side_indx = img.shape.index(smaller_side)
@@ -263,7 +260,7 @@ def evaluate_recognition_system(opts, n_worker=1):
         img = Image.open(img_path).convert("RGB")
         img = np.array(img).astype(np.float32) / 255
         
-            ##my idea
+        ##===My idea for squaring every image into the same size(512, 512) for performance improvement===##
         # smaller_side = min(img.shape[0:2])
         # bigger_side = max(img.shape[0:2])
         # side_indx = img.shape.index(smaller_side)
@@ -280,6 +277,7 @@ def evaluate_recognition_system(opts, n_worker=1):
         #         img_crop = np.repeat(img_crop[:, :, np.newaxis], 3, axis=2)
 
         # img = resize(img_crop, (512, 512))
+        
         feature_test = get_image_feature(test_opts, img_path, dictionary)
         dist_list = similarity_to_set(feature_test, features)
         pred = train_labels[dist_list.argmin()]

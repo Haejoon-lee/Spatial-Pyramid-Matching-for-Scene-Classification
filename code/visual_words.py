@@ -62,7 +62,9 @@ def compute_dictionary_one_image(filter_responses, alpha):
     """
 
     # ----- TODO -----
-    filter_responses_sampled = filter_responses.reshape(-1, filter_responses.shape[2])
+    filter_responses_sampled = filter_responses.reshape(-1, filter_responses.shape[2]) #Reshape to (H*W, 3*4*n_scale) 
+    
+    #Sample alpha random pixels
     filter_responses_sampled = filter_responses_sampled[np.random.randint(filter_responses_sampled.shape[0], size=alpha), :]
 
     return filter_responses_sampled
@@ -136,7 +138,7 @@ def compute_dictionary(opts, n_worker=1):
 
 def get_visual_words(opts, img, dictionary):
     """
-    Compute visual words mapping for the given img using the dictionary of visual words.
+    Compute visual words mapping for the given img's each pixel using the dictionary of visual words.
 
     [input]
     * opts    : options
